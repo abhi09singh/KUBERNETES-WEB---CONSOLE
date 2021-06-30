@@ -1,0 +1,167 @@
+<html>
+ <head>
+  <title>Kubernetes Web-console</title>
+ </head>
+
+<script>
+
+function run(){
+ var i = document.getElementById("ds").value
+ var cmd_no="0";
+ var command="";
+ if (((i.includes("create")) || (i.includes("build")) || (i.includes("launch"))) && ((i.includes("deployments")) || (i.includes("deployment")))) {
+        var img_name = prompt("Enter Image name: ");
+	var deployment_name = prompt("Enter Deployment name: ");
+	var cmd_no = "1";
+	var command = cmd_no + " " + img_name + " " + deployment_name; 
+	
+    }
+
+ else if (((i.includes("create")) || (i.includes("build")) || (i.includes("launch"))) && ((i.includes("pods")) || (i.includes("pod")))) {
+	var img_name = prompt("Enter Image name: ");
+	var pod_name = prompt("Enter Pod name: ");
+	var cmd_no = "2";
+	var command = cmd_no + " " + img_name + " " + pod_name;
+	
+	}
+
+ else if (((i.includes("delete")) || (i.includes("remove"))) && ((i.includes("pods")) || (i.includes("pod")))) {
+	var pod_name = prompt("Enter pod name: ");
+	var cmd_no = "3";
+	var command = cmd_no + " " + pod_name;
+	
+	}
+
+  else if (((i.includes("delete")) || (i.includes("remove"))) && ((i.includes("deployments")) || (i.includes("deployment")))) {
+	var deployment_name = prompt("Enter Deployment name: ");
+	var cmd_no = "4";
+	var command = cmd_no + " " + deployment_name;
+	
+    }
+
+  else if ((i.includes("expose")) && ((i.includes("deployments")) || (i.includes("deployment")))) {
+	var deployment_name = prompt("Enter Deployment name: ");
+	var port_no = prompt("Enter port no of your deploymrnt: ");
+	var type = prompt("Enter the type which you want to export(NodePort/ClusterIP/External): ");
+	var cmd_no = "5"
+	var command = cmd_no + " " + deployment_name + " " + port_no + " " + type;
+	
+    }
+
+  else if (((i.includes("scale")) || (i.includes("increase")) || (i.includes("decrease")) || (i.includes("scale up")) || (i.includes("scale down"))) && ((i.includes("deployments")) || (i.includes("deployment")))) {
+	var deployment_name = prompt("Enter Deployment name: ");
+	var replica = prompt("Enter no. of replicas: ");
+	var cmd_no = "6";
+	var command = cmd_no + " " + deployment_name + " " + replica;
+	
+    }
+
+  else if (((i.includes("show")) || (i.includes("get"))) && ((i.includes("pods")) || (i.includes("pod")))) {
+	var cmd_no = "7";
+	var command = cmd_no;
+	
+	}
+  else if (((i.includes("show")) || (i.includes("get"))) && ((i.includes("service")) || (i.includes("services")) || (i.includes("svc")))) {
+	var cmd_no = "8";
+	var command = cmd_no;
+	
+	}
+  else if (((i.includes("delete")) || (i.includes("remove")) || (i.includes("destroy"))) && ((i.includes("all")) || (i.includes("everything")))) {
+        var cmd_no = "9";
+        var command = cmd_no;
+
+        }
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "http://192.168.56.101/cgi-bin/task9.py?x=" + command,true);
+  xhr.send();
+  xhr.onload=function(){
+    var output = xhr.responseText;
+    document.getElementById("d1").innerHTML = output;
+  }
+}	
+
+</script>
+
+<style>
+ body{ margin: 0; 
+      padding:0;
+    }
+
+ div#hd{ 
+      height:100vh; 
+      background-image: url("http://treasuresofinnocence.org/wp-content/uploads/2015/08/4.New-style-light-blue-color-Background-image-www.graphiclay.blogspot.com_.jpg") ; 
+      background-size: cover; 
+      background-position:center; 
+      display: flex; 
+      justify-content: center; 
+      padding-left:20px; 
+      font-family: sans-serif;
+      opacity: 150%;
+      } 
+
+ h1{ color:#fff; 
+     margin-bottom:40px; 
+     font-size: 45px;  
+     letter-spacing: 2px;
+   }
+
+ div#cmdbox { width:710px; 
+              height:70px; 
+              background-color:#82CAFA; 
+              padding:20px;
+            }
+
+ input#ds{ width:450px; 
+           height:30px; 
+           padding:10px; 
+           border:none; 
+           border-radius:25px; 
+           outline:none;
+         }
+
+ button { height:40px; 
+          width:100px; 
+          background: #ffeb3b; 
+          border:none; 
+          color: #000; 
+          border-radius: 25px; 
+        }
+
+ pre{ width:1400px; 
+      height:400px; 
+      background:rgba(0,0,0,0.5); 
+      padding:20px; 
+      font-size:15px; 
+      color:#fff
+    }
+
+ button:hover{ background:#ffc107; 
+               cursor: pointer; }
+
+ img {margin-right:30px; width:200px; height:186px } 
+</style>
+ <body>
+  <div id="hd">
+  
+  <form>
+  
+  <div id="box">
+  <img align=right src="https://miro.medium.com/max/625/1*rQuaLXlDy1-gqEPKBshcwA.gif">
+   <h1 style="background-color:tomato;">KUBERNETES WEB-CONSOLE</h1>
+   
+   
+   <div id="cmdbox">
+   Pass Your Requirement Here:  
+   <input type="text" id="ds" placeholder="Type  here..">
+   <button onclick="run()" id="run-cmd" type="button">Execute</button>
+   <br>
+   </div>
+   <pre>
+      <div id="d1">Output...</div>
+   </pre>
+   </div>
+   </form>
+  </div>
+ </body>
+</html>
